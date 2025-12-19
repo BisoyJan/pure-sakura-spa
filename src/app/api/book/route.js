@@ -54,11 +54,20 @@ export async function POST(request) {
         const sheets = await getSheetsClient();
         const spreadsheetId = process.env.GOOGLE_SHEET_ID;
 
-        await sheets.spreadsheets.values.append({
+        // Get the current number of rows to find the next empty row
+        const response = await sheets.spreadsheets.values.get({
             spreadsheetId,
-            range: 'Sheet1!A:H',
+            range: 'Sheet1!A:A',
+        });
+
+        const numRows = response.data.values ? response.data.values.length : 0;
+        const nextRow = numRows + 1;
+
+        // Insert at the specific next row
+        await sheets.spreadsheets.values.update({
+            spreadsheetId,
+            range: `Sheet1!A${nextRow}:H${nextRow}`,
             valueInputOption: 'USER_ENTERED',
-            insertDataOption: 'INSERT_ROWS',
             requestBody: {
                 values: [
                     [
