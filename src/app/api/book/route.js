@@ -58,6 +58,7 @@ export async function POST(request) {
             spreadsheetId,
             range: 'Sheet1!A:H',
             valueInputOption: 'USER_ENTERED',
+            insertDataOption: 'INSERT_ROWS',
             requestBody: {
                 values: [
                     [
