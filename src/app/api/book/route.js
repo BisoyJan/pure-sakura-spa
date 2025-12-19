@@ -67,7 +67,7 @@ export async function POST(request) {
         await sheets.spreadsheets.values.update({
             spreadsheetId,
             range: `Sheet1!A${nextRow}:H${nextRow}`,
-            valueInputOption: 'USER_ENTERED',
+            valueInputOption: 'RAW',
             requestBody: {
                 values: [
                     [
